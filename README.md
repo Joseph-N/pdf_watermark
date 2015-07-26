@@ -19,11 +19,11 @@ Or install it yourself as:
     $ gem install pdf_watermark
 
 ## Usage
-'''ruby
+```ruby
 require 'pdf_watermark'
 
 PdfWatermark.watermark("Private and Confidential", "content.pdf", "result.pdf", {:margin => 20,:angle=>:diagonal})
-'''
+```
 ## Development
 
 
