@@ -5,14 +5,14 @@ module PdfWatermark
 
     def initialize(mark_string, angle, width, height, options={})
       default = {
-          font: "#{FONT_DIR}/chinese.stxihei.ttf",
+          font:"",
           x: 0,
           y: -1,
           align: :center,
           valign: :center,
           margin: 5,
           font_size: -1,
-          font_color:"000000",
+          font_color:"9999999",
           transparent: 0.2
       }
       @options = default.merge(options)
@@ -65,7 +65,7 @@ module PdfWatermark
       def actual_font_size(size)
         text_width = self.text_width(size)
         if text_width > @max_text_width
-          size * (@max_text_width / text_width)
+          (size * (@max_text_width / text_width)).floor
         else
           size
         end

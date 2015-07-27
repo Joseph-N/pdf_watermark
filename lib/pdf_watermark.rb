@@ -9,15 +9,18 @@ module PdfWatermark
 
   BASEDIR = File.expand_path(File.join(dir, '..'))
   FONT_DIR = File.expand_path(File.join(dir, '..', 'fonts'))
-  MAX_FONT_SIZE= 50
+  MAX_FONT_SIZE= 75
 
   def self.watermark(mark_string, source, destination, options={})
     default={
         angle: :diagonal,
         width: -1,
         height: -1,
-        margin: 5,
-        font:"#{FONT_DIR}/chinese.stxihei.ttf"
+        margin: 50,
+        font: "#{FONT_DIR}/wqyzenhei.ttf",
+        font_size: -1,
+        font_color: "999999",
+        transparent: 0.2
     }
     options = default.merge(options)
 
@@ -26,7 +29,9 @@ module PdfWatermark
 
     @width = options[:width] <=0 ? source_size[0] : options[:width]
     @height = options[:height] <=0 ? source_size[1] : options[:height]
-    wm = WaterMark.new(mark_string, options[:angle], @width, @height, {:margin => options[:margin],:font=>options[:font]})
+    wm = WaterMark.new(mark_string, options[:angle], @width, @height,
+                       {:margin => options[:margin], :font => options[:font], :font_size => options[:font_size],
+                        :transparent => options[:transparent], :font_color => options[:font_color]})
     wm.text_watermark
 
     water_mark_pdf = CombinePDF.parse(wm.render()).pages[0]
