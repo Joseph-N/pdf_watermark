@@ -11,7 +11,7 @@ module PdfWatermark
   FONT_DIR = File.expand_path(File.join(dir, '..', 'fonts'))
   MAX_FONT_SIZE= 75
 
-  def self.watermark(mark_string, source, destination, options={})
+  def self.watermark(mark_string, source, destination=nil, options={})
     default={
         angle: :diagonal,
         width: -1,
@@ -39,9 +39,11 @@ module PdfWatermark
     source_pdf.pages.each do |page|
       page << water_mark_pdf
     end
-    source_pdf.save destination
-
-
+    if destination.nil?
+      source_pdf.to_pdf
+    else
+      source_pdf.save destination
+    end
   end
 
   def self.page_size(page)
