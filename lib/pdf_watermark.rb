@@ -7,27 +7,32 @@ module PdfWatermark
   BASEDIR = File.join(LIB_DIR, '..')
   FONT_DIR = File.join(LIB_DIR, '..', 'fonts')
   MAX_FONT_SIZE= 75
+  REPEAT_X_OFFSET = 75
+  REPEAT_Y_OFFSET = 75
 
   def self.watermark(mark_string, source, destination = nil, options: {})
     default={
       angle: :diagonal,
-      margin: 50,
+      margin: [50, 50, 50, 50],
       font: "#{FONT_DIR}/wqyzenhei.ttf",
+      font_size: 12,
       font_color: "#999999",
       transparent: 0.2,
-      align: :center,
+      align: :left,
       valign: :center,
+      mode: :fill
     }
     options = default.merge(options)
 
-    source_pdf = CombinePDF.load(source)
+    source_pdf = CombinePDF.load(source, allow_optional_content: true)
     source_size = page_size(source_pdf.pages[0])
 
-    options[:width] ||= source_size[0]
-    options[:height] ||= source_size[1]
+    options[:source_size] = source_size
+    options[:content_width] ||= source_size[0] - (options[:margin][1] + options[:margin][3])
+    options[:content_height] ||= source_size[1] - (options[:margin][0] + options[:margin][2])
 
-    wm = WaterMark.new(mark_string, options).text_watermark
-    water_mark_pdf = CombinePDF.parse(wm).pages[0]
+    wm = WaterMark.new(mark_string, options).render
+    water_mark_pdf = CombinePDF.parse(wm, allow_optional_content: true).pages[0]
 
     source_pdf.pages.each do |page|
       page << water_mark_pdf
