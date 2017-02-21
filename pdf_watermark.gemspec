@@ -23,8 +23,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.test_files = Dir['spec/*_spec.rb']
 
-  spec.add_dependency('prawn', '~> 2.1.0')
-  spec.add_dependency('combine_pdf')
+  spec.add_runtime_dependency('prawn', '~> 2.1', '>= 2.1.0')
+  spec.add_runtime_dependency('combine_pdf', '~> 0.2.34')
 
   spec.add_development_dependency('bundler', '~> 1.10')
   spec.add_development_dependency('rake', '~> 10.0')
