@@ -89,7 +89,8 @@ module PdfWatermark
 
     protected
     def text_width(text, size)
-      document.width_of text, size: size, margin: 0, left_margin: 0, right_margin: 0
+      document.width_of(text, size: size, margin: 0, left_margin: 0, right_margin: 0).ceil
+
     end
 
     def calculated_font_size(text, size, max)

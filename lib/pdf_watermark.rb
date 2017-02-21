@@ -7,8 +7,8 @@ module PdfWatermark
   BASEDIR = File.join(LIB_DIR, '..')
   FONT_DIR = File.join(LIB_DIR, '..', 'fonts')
   MAX_FONT_SIZE= 75
-  REPEAT_X_OFFSET = 75
-  REPEAT_Y_OFFSET = 75
+  REPEAT_X_OFFSET = 80
+  REPEAT_Y_OFFSET = 80
 
   def self.watermark(mark_string, source, destination = nil, options: {})
     default={
