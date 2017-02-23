@@ -14,7 +14,7 @@ module PdfWatermark
     default={
       angle: :diagonal,
       margin: [50, 50, 50, 50],
-      font: "#{FONT_DIR}/NotoSansSC-Regular.ttf",
+      font: "#{FONT_DIR}/SourceHanSansSC-Regular.ttf",
       font_size: 12,
       font_color: "999999",
       transparent: 0.2,
