@@ -6,21 +6,22 @@ module PdfWatermark
   LIB_DIR = File.dirname(File.realpath(__FILE__))
   BASEDIR = File.join(LIB_DIR, '..')
   FONT_DIR = File.join(LIB_DIR, '..', 'fonts')
-  MAX_FONT_SIZE= 75
   REPEAT_X_OFFSET = 80
   REPEAT_Y_OFFSET = 80
 
   def self.watermark(mark_string, source, destination = nil, options: {})
     default={
       angle: :diagonal,
-      margin: [50, 50, 50, 50],
+      margin: [10, 10, 10, 10],
       font: "#{FONT_DIR}/SourceHanSansSC-Regular.ttf",
-      font_size: 12,
+      font_size: '12px',
       font_color: "999999",
       transparent: 0.2,
       align: :left,
       valign: :center,
-      mode: :fill
+      mode: :fill,
+      max_font_size: 50,
+      min_font_size: 15,
     }
     options = default.merge(options)
 

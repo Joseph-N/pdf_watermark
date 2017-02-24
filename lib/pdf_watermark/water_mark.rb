@@ -10,6 +10,16 @@ module PdfWatermark
       @angle = options[:angle] == :diagonal ? rad_to_degree(Math.atan(@content_height.to_f/@content_width.to_f)) : options[:angle]
       @mark_string = mark_string
       @font_size = @options[:font_size]
+      if @font_size.is_a?(String)
+        if @font_size =~ /(\d+[.]?\d*)%/
+          @font_size = ($1.to_f / 100) * @content_width
+          @font_size = [@font_size, @options[:max_font_size]].min
+          @font_size = [@font_size, @options[:min_font_size]].max
+        else
+          @font_size = @font_size.to_i
+        end
+      end
+
       @font = @options[:font]
       @x = @options[:x] || 0
       @y = @options[:y] || @content_height
@@ -37,7 +47,7 @@ module PdfWatermark
       else
         @max_text_width = (@content_height/Math.sin(rad)).abs
       end
-      @font_size ||= calculated_font_size(@mark_string, MAX_FONT_SIZE, @max_text_width)
+      @font_size ||= calculated_font_size(@mark_string, @options[:max_font_size], @max_text_width)
 
       font(@options[:font]) do
         bounding_box([@x, @y], width: @content_width, height: @content_height) do
@@ -63,10 +73,12 @@ module PdfWatermark
           box_width = text_width(@mark_string, @font_size)
           temp_y = @y
           indent = false
+          offset_x = box_width + [3 * @font_size, REPEAT_X_OFFSET].max
+          offset_y = box_height + [3 * @font_size, REPEAT_Y_OFFSET].max
           bounding_box([@x, @y], width: @content_width, height: @content_height) do
             while temp_y > 0 do
               rotate @angle, origin: [@content_width/2, @content_height/2] do
-                temp_x = indent ? ((box_width + REPEAT_X_OFFSET) / 2) : 0
+                temp_x = indent ? (offset_x / 2.0) : 0
                 while temp_x <= @content_width
                   formatted_text_box(
                     [{ text: @mark_string, color: @options[:font_color] }],
@@ -75,10 +87,10 @@ module PdfWatermark
                     align: @options[:align], valign: @options[:valign],
                     size: @font_size,
                   )
-                  temp_x += box_width + REPEAT_X_OFFSET
+                  temp_x += offset_x
                 end
               end
-              temp_y -= box_height + REPEAT_Y_OFFSET
+              temp_y -= offset_y
               indent = !indent
             end
           end
