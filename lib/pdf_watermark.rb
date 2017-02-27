@@ -22,6 +22,7 @@ module PdfWatermark
       mode: :fill,
       max_font_size: 50,
       min_font_size: 15,
+      repeat_offset: 4
     }
     options = default.merge(options)
 

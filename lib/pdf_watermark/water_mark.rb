@@ -73,8 +73,8 @@ module PdfWatermark
           box_width = text_width(@mark_string, @font_size)
           temp_y = @y
           indent = false
-          offset_x = box_width + [3 * @font_size, REPEAT_X_OFFSET].max
-          offset_y = box_height + [3 * @font_size, REPEAT_Y_OFFSET].max
+          offset_x = box_width + @options[:repeat_offset] * @font_size
+          offset_y = box_height + @options[:repeat_offset] * @font_size
           bounding_box([@x, @y], width: @content_width, height: @content_height) do
             while temp_y > 0 do
               rotate @angle, origin: [@content_width/2, @content_height/2] do
