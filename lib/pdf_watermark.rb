@@ -3,6 +3,8 @@ require 'pdf_watermark/water_mark/repeated'
 require 'pdf_watermark/water_mark/single'
 module PdfWatermark
 
+  include HexaPDF::Encryption::StandardSecurityHandler::Permissions
+
   LIB_DIR = File.dirname(File.realpath(__FILE__))
   BASEDIR = File.realpath File.join(LIB_DIR, '..')
   FONT_DIR = File.realpath File.join(LIB_DIR, '..', 'fonts')
@@ -32,7 +34,20 @@ module PdfWatermark
       document = PdfWatermark::WaterMark::Single.new(mark_string, source, options).render
     end
 
-    document.write(destination)
+    if options[:read_only]
+      permissions = 1
+      document.encrypt(name: :Standard, owner_password: options[:password], permissions: permissions)
+    end
+
+
+    if destination
+      document.write(destination)
+    else
+      StringIO.open('', 'wb') do |io|
+        document.write(io)
+        io.string
+      end
+    end
   end
 
   def self.page_size(page)
