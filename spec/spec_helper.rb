@@ -11,7 +11,7 @@ end
 require_relative '../lib/pdf_watermark'
 require 'rspec'
 
-def create_pdf(klass = Prawn::Document, &block)
+def create_pdf(klass = HexaPDF::Document.new, &block)
   klass.new(margin: 0, &block)
 end
 

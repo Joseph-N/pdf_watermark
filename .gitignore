@@ -8,5 +8,6 @@
 /spec/reports/
 /tmp/
 /.idea
-/spec/data/result.pdf
+/spec/data/*
+!/spec/data/test.pdf
 *.gem
