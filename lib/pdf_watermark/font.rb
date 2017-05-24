@@ -30,7 +30,18 @@ module PdfWatermark
         (string.length * self.graphics_state.character_spacing)
     end
   end
+
+  module FontDescriptor
+    def perform_validation
+      descent = self[:Descent]
+      if descent && descent > 0
+        self[:Descent] = - descent
+      end
+      super
+    end
+  end
 end
 
 HexaPDF::Font::TrueType::Font.include(PdfWatermark::Font)
 HexaPDF::Content::Canvas.include(PdfWatermark::Canvas)
+HexaPDF::Type::FontDescriptor.prepend(PdfWatermark::FontDescriptor)
