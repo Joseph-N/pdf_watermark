@@ -24,7 +24,8 @@ module PdfWatermark
       mode: :fill,
       max_font_size: 50,
       min_font_size: 15,
-      repeat_offset: 4
+      repeat_offset: 4,
+      validate: true,
     }
     options = default.merge(options)
 
@@ -41,10 +42,10 @@ module PdfWatermark
 
 
     if destination
-      document.write(destination)
+      document.write(destination, validate: options[:validate])
     else
       StringIO.open('', 'wb') do |io|
-        document.write(io)
+        document.write(io, validate: options[:validate])
         io.string
       end
     end

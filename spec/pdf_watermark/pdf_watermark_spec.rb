@@ -2,7 +2,7 @@ require 'spec_helper'
 describe PdfWatermark do
   let(:pdf) { create_pdf }
 
-  let(:source) { File.join(test_root, 'data', 'test.pdf') }
+  let(:source) { File.join(test_root, 'data', 'cb984a7afaa94f998086cb3ca67203bd.pdf') }
   let(:dest_single) { File.join(test_root, 'data', 'result_single.pdf') }
   let(:dest_repeat) { File.join(test_root, 'data', 'result_repeat.pdf') }
   it 'create watermark' do
