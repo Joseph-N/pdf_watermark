@@ -11,7 +11,7 @@ module PdfWatermark
   REPEAT_X_OFFSET = 80
   REPEAT_Y_OFFSET = 80
 
-  def self.watermark(mark_string, source, destination = nil, options: {})
+  def self.watermark(mark_string, source, destination = nil, options: {}, validate: true)
     default={
       angle: :diagonal,
       margin: [10, 10, 10, 10],
@@ -25,7 +25,6 @@ module PdfWatermark
       max_font_size: 50,
       min_font_size: 15,
       repeat_offset: 4,
-      validate: true,
     }
     options = default.merge(options)
 
@@ -42,10 +41,10 @@ module PdfWatermark
 
 
     if destination
-      document.write(destination, validate: options[:validate])
+      document.write(destination, validate: validate)
     else
       StringIO.open('', 'wb') do |io|
-        document.write(io, validate: options[:validate])
+        document.write(io, validate: validate)
         io.string
       end
     end
