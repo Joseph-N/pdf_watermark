@@ -23,9 +23,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.test_files = Dir['spec/*_spec.rb']
 
-  spec.add_runtime_dependency('hexapdf', '~> 0.3')
-
   spec.add_development_dependency('bundler', '~> 1.10')
+  spec.add_development_dependency('ruby-prof')
   spec.add_development_dependency('rake', '~> 10.0')
   spec.add_development_dependency('rspec', '~> 3.0')
   spec.add_development_dependency('rubocop', '~> 0.47.1')
