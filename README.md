@@ -7,6 +7,7 @@ Add watermark to your pdf. two external gem will be used: combine_pdf and prawn.
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'hexapdf', git: 'https://github.com/shibocuhk/hexapdf'
 gem 'pdf_watermark'
 ```
 
@@ -22,14 +23,16 @@ Or install it yourself as:
 ```ruby
 require 'pdf_watermark'
 
-PdfWatermark.watermark("Private and Confidential", "content.pdf", "result.pdf", {:margin => 20,:angle=>:diagonal})
+PdfWatermark.watermark('师博 · 华兴Alpha  华兴Alpha  华兴Alpha', source, destination,
+                           options: { angle: 15, align: :center, font_color: '999999', transparent: 0.2,
+                                      margin: [0, 0, 0, 0], mode: :repeat, max_font_size: 1000, font_size: '3%' }, validate: false)
 ```
 ## Development
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pdf_watermark. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/shibocuhk/pdf_watermark. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
