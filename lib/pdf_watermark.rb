@@ -42,6 +42,7 @@ module PdfWatermark
 
     if destination
       document.write(destination, validate: validate)
+      destination
     else
       StringIO.open('', 'wb') do |io|
         document.write(io, validate: validate)
